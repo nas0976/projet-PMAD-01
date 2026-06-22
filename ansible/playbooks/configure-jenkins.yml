@@ -1,0 +1,17 @@
+---
+- name: Configuration initiale du conteneur Jenkins
+  hosts: jenkins
+  gather_facts: yes
+
+  tasks:
+    - name: Vérifier que le répertoire des outils de build existe
+      ansible.builtin.file:
+        path: /var/jenkins_home/tools
+        state: directory
+        owner: jenkins
+        group: jenkins
+        mode: '0755'
+
+    - name: Afficher un message de succès
+      ansible.builtin.debug:
+        msg: "Le conteneur Jenkins est prêt pour l'automatisation du Sprint 2 !"
