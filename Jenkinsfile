@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        // Indique à kubectl d'utiliser la configuration partagée du cluster PMAD
+        KUBECONFIG = '${WORKSPACE}/.kube/config'
+    }
+
     stages {
         stage('Checkout Code') {
             steps {
@@ -23,6 +28,8 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 echo 'Déploiement de l application sur le cluster Kubernetes PMAD...'
+                // Exécution de la commande de déploiement à l'intérieur du conteneur
+                sh 'kubectl apply -f k8s/deployment.yml --validate=false'
             }
         }
     }
