@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rustdesk-hbbs
+  namespace: pmad
+spec:
+  selector:
+    app: rustdesk-hbbs
+  ports:
+  - port: 21115
+    name: tcp-21115
+    targetPort: 21115
+  - port: 21116
+    name: tcp-21116
+    targetPort: 21116
+  - port: 21116
+    protocol: UDP
+    name: udp-21116
+    targetPort: 21116
+  - port: 21118
+    name: tcp-21118
+    targetPort: 21118
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rustdesk-hbbr
+  namespace: pmad
+spec:
+  selector:
+    app: rustdesk-hbbr
+  ports:
+  - port: 21117
+    name: tcp-21117
+    targetPort: 21117
+  - port: 21119
+    name: tcp-21119
+    targetPort: 21119
