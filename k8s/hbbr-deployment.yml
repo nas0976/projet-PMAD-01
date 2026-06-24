@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: rustdesk-hbbr
   namespace: pmad
-  labels:
-    app: rustdesk-hbbr
 spec:
   replicas: 1
   selector:
@@ -16,28 +14,14 @@ spec:
         app: rustdesk-hbbr
     spec:
       containers:
-      - name: hbbr
+      - name: rustdesk-hbbr
         image: rustdesk/rustdesk-server:latest
         command: ["hbbr"]
-        ports:
-        - containerPort: 21117
-          name: tcp-21117
-        - containerPort: 21119
-          name: tcp-21119
+        args: ["-k", "_"]
         volumeMounts:
-        - name: rustdesk-storage
+        - name: hbbr-data
           mountPath: /root
-        livenessProbe:
-          tcpSocket:
-            port: 21117
-          initialDelaySeconds: 10
-          periodSeconds: 10
-        readinessProbe:
-          tcpSocket:
-            port: 21117
-          initialDelaySeconds: 5
-          periodSeconds: 10
       volumes:
-      - name: rustdesk-storage
+      - name: hbbr-data
         persistentVolumeClaim:
           claimName: rustdesk-pvc
